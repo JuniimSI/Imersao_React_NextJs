@@ -1,6 +1,6 @@
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import db from '../db.json';
-
+import Head from 'next/head';
 const GlobalStyle = createGlobalStyle`
   * {
   box-sizing: border-box;
@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
     flex-direction: column;
     font-family: 'Lato', sans - serif;
     // Deixa branco no começo
-    color: ${ ({ theme }) => theme.colors.contrastText };
+    color: ${({ theme }) => theme.colors.contrastText};
   }
   html, body {
     min-height: 100vh;
@@ -30,10 +30,14 @@ const theme = db.theme;
 export default function App({ Component, pageProps }) {
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <Head>
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet"/>
+    </Head>
+          <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <Component {...pageProps} />
+          </ThemeProvider>
     </>
   )
 }
