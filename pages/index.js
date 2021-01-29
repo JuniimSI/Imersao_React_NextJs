@@ -12,15 +12,6 @@ import Input from '../src/components/Input';
 import Button from '../src/components/Button';
 import QuizContainer from '../src/components/QuizContainer';
 
-// const BackgroundImage = styled.div`
-//   background-image: url(${db.bg});
-//   flex: 1;
-//   background-size: 100%;
-//   background-position: center;
-//   background-size: cover;
-// `;
-
-
 
 export default function Home() {
   const router = useRouter();
