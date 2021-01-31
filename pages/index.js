@@ -13,7 +13,7 @@ import Input from '../src/components/Input';
 import Button from '../src/components/Button';
 import QuizContainer from '../src/components/QuizContainer';
 import Link from '../src/components/Link';
-
+//import ShimmerEffect from '../src/screens/ShimmerEffect';
 
 
 export default function Home() {
@@ -21,7 +21,9 @@ export default function Home() {
   const [name, setName] = React.useState('');
 
   return (
+    
     <QuizBackground backgroundImage={db.bg}>
+      
       <Head>
         <title>AluraQuiz</title>
       </Head>

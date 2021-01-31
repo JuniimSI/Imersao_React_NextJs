@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
 import db from '../../db.json';
 import Widget from '../../src/components/Widget';
@@ -9,6 +10,8 @@ import QuizContainer from '../../src/components/QuizContainer';
 import Button from '../../src/components/Button';
 import BackLinkArrow from '../../src/components/BackLinkArrow';
 import AlternativesForm from '../../src/components/AlternativesForm';
+import SkeletonDiv from '../../src/components/SkeletonDiv';
+import Progress from '../../src/screens/Progress';
 
 
 function ResultWidget({ results }) {
@@ -58,11 +61,29 @@ function LoadingWidget() {
   return (
     <Widget>
       <Widget.Header>
-        Carregando...
+          Carregando...
       </Widget.Header>
-
       <Widget.Content>
-        [Desafio do Loading]
+        <SkeletonTheme color="#9e9e9e" highlightColor="#e0e0e0">
+          <SkeletonDiv>
+            <Skeleton circle={false} height={100} />
+          </SkeletonDiv>
+          <SkeletonDiv>
+            <Skeleton height={10} count={2}/>
+          </SkeletonDiv>
+          <SkeletonDiv>
+            <Skeleton height={30} />
+          </SkeletonDiv>
+          <SkeletonDiv>
+            <Skeleton height={30} />
+          </SkeletonDiv>
+          <SkeletonDiv>
+            <Skeleton height={30} />
+          </SkeletonDiv>
+          <SkeletonDiv>
+            <Skeleton height={30} />
+          </SkeletonDiv>
+        </SkeletonTheme>
       </Widget.Content>
     </Widget>
   );
@@ -76,6 +97,7 @@ function QuestionWidget({ question, questionIndex, addResult, totalQuestions, on
   const hasAlternativeSelected = selectedAlternative !== undefined;
 
   return (
+
     <Widget
       as={motion.div}
       initial={{ scale: 0 }}
@@ -86,6 +108,7 @@ function QuestionWidget({ question, questionIndex, addResult, totalQuestions, on
         damping: 20
       }}
     >
+        
       <Widget.Header>
         <BackLinkArrow href="/" />
         <h3>
