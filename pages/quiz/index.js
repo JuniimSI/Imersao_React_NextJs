@@ -1,16 +1,23 @@
 import React from 'react';
-import db from '../db.json';
-import Widget from '../src/components/Widget';
-import QuizLogo from '../src/components/QuizLogo';
-import QuizBackground from '../src/components/QuizBackground';
-import QuizContainer from '../src/components/QuizContainer';
-import Button from '../src/components/Button';
-import AlternativesForm from '../src/components/AlternativesForm';
+import { motion } from 'framer-motion';
+
+import db from '../../db.json';
+import Widget from '../../src/components/Widget';
+import QuizLogo from '../../src/components/QuizLogo';
+import QuizBackground from '../../src/components/QuizBackground';
+import QuizContainer from '../../src/components/QuizContainer';
+import Button from '../../src/components/Button';
+import BackLinkArrow from '../../src/components/BackLinkArrow';
+import AlternativesForm from '../../src/components/AlternativesForm';
 
 
-function ResultWidget( { results } ) {
+function ResultWidget({ results }) {
   return (
-    <Widget>
+    <Widget as={motion.div}
+      animate={{ scale: 1 }}
+      initial={{ scale: -2 }}
+      transition={{ duration: 0.5 }}
+    >
       <Widget.Header>
         Tela de Resultado:
       </Widget.Header>
@@ -29,7 +36,7 @@ function ResultWidget( { results } ) {
           {' '} perguntas
         </p>
         <ul>
-        {results.map((result, index) => (
+          {results.map((result, index) => (
             <li key={`result__${result}`}>
               #
               {index + 1}
@@ -61,7 +68,7 @@ function LoadingWidget() {
   );
 }
 
-function QuestionWidget({  question,  questionIndex, addResult, totalQuestions,  onSubmit,}) {
+function QuestionWidget({ question, questionIndex, addResult, totalQuestions, onSubmit, }) {
   const [selectedAlternative, setSelectedAlternative] = React.useState(undefined);
   const questionId = `question__${questionIndex}`;
   const isCorrect = selectedAlternative === question.answer;
@@ -69,9 +76,18 @@ function QuestionWidget({  question,  questionIndex, addResult, totalQuestions, 
   const hasAlternativeSelected = selectedAlternative !== undefined;
 
   return (
-    <Widget>
+    <Widget
+      as={motion.div}
+      initial={{ scale: 0 }}
+      animate={{ rotate: 360, scale: 1 }}
+      transition={{
+        type: "spring",
+        stiffness: 260,
+        damping: 20
+      }}
+    >
       <Widget.Header>
-        {/* <BackLinkArrow href="/" /> */}
+        <BackLinkArrow href="/" />
         <h3>
           {`Pergunta ${questionIndex + 1} de ${totalQuestions}`}
         </h3>
@@ -108,7 +124,7 @@ function QuestionWidget({  question,  questionIndex, addResult, totalQuestions, 
         >
           {question.alternatives.map((alternative, alternativeIndex) => {
             const alternativeId = `alternative__${alternativeIndex}`;
-            const alternativeStatus = isCorrect ? 'SUCCESS': 'ERROR';
+            const alternativeStatus = isCorrect ? 'SUCCESS' : 'ERROR';
             const isSelected = selectedAlternative === alternativeIndex;
 
             return (
@@ -121,7 +137,7 @@ function QuestionWidget({  question,  questionIndex, addResult, totalQuestions, 
 
               >
                 <input
-                  // style={{ display: 'none' }}
+                  style={{ display: 'none' }}
                   id={alternativeId}
                   name={questionId}
                   onChange={() => setSelectedAlternative(alternativeIndex)}
@@ -159,7 +175,7 @@ export default function QuizPage() {
   const questionIndex = currentQuestion;
   const question = db.questions[questionIndex];
 
-  function addResult(result){
+  function addResult(result) {
     setResults([
       ...results,
       result
@@ -175,7 +191,7 @@ export default function QuizPage() {
     setTimeout(() => {
       setScreenState(screenStates.QUIZ);
     }, 1 * 1000);
-  // nasce === didMount
+    // nasce === didMount
   }, []);
 
   function handleSubmitQuiz() {
@@ -203,7 +219,7 @@ export default function QuizPage() {
 
         {screenState === screenStates.LOADING && <LoadingWidget />}
 
-        {screenState === screenStates.RESULT && <ResultWidget results={results}/>}
+        {screenState === screenStates.RESULT && <ResultWidget results={results} />}
       </QuizContainer>
     </QuizBackground>
   );
